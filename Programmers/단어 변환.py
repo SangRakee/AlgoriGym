@@ -1,9 +1,11 @@
+from collections import deque
+
 def bfs(begin, target, words):
-    q = [begin]
+    queue = deque([begin])
     visit = [0] * len(words)
     index = words.index(target)
-    while q:
-        text = q.pop(0)
+    while queue:
+        text = queue.popleft()
         if text == target:
             return visit[index]
 
@@ -16,7 +18,7 @@ def bfs(begin, target, words):
 
                 if sum_of_word == len(text) - 1:
                     visit[i] = visit[words.index(text)] + 1
-                    q.append(words[i])
+                    queue.append(words[i])
 
     return 0
 
@@ -32,3 +34,4 @@ def solution(begin, target, words):
     words.insert(0,begin)
     answer = bfs(begin, target, words)
     return answer
+
