@@ -1,8 +1,11 @@
+begin="hit"
+target="cog"
+words=["hot", "dot", "dog", "lot", "log", "cog"]
+
 from collections import deque
 
-def bfs(begin, target, words):
+def bfs(begin, target, words,visit):
     queue = deque([begin])
-    visit = [0] * len(words)
     index = words.index(target)
     while queue:
         text = queue.popleft()
@@ -26,12 +29,14 @@ def bfs(begin, target, words):
 
 def solution(begin, target, words):
     answer = 0
+    visit = [0] * (len(words)+1)
 
     # target이 words안에 존재하지 않으면
     if target not in words:
         return 0
 
     words.insert(0,begin)
-    answer = bfs(begin, target, words)
+    answer = bfs(begin, target, words,visit)
     return answer
 
+print(solution(begin,target,words))
