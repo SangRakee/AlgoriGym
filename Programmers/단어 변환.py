@@ -7,7 +7,7 @@ from collections import deque
 def bfs(begin, target, words,visit):
     queue = deque([begin])
     index = words.index(target)
-    
+    print(queue)
     while queue:
         text = queue.popleft()
         if text == target:
@@ -23,14 +23,19 @@ def bfs(begin, target, words,visit):
                 if sum_of_word == len(text) - 1:
                     visit[i] = visit[words.index(text)] + 1
                     queue.append(words[i])
+                    print(visit,text,queue)
 
-    return 0
+
 
 
 
 def solution(begin, target, words):
     answer = 0
     visit = [0] * (len(words)+1)
+
+    # target이 words안에 존재하지 않으면
+    if target not in words:
+        return 0
 
     words.insert(0,begin)
     answer = bfs(begin, target, words,visit)
