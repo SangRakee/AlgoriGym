@@ -51,6 +51,6 @@ int main() {
 }
 
 
-√‚√≥: https://gyutts.tistory.com/80 [Developer Q.bot]
+// https://gyutts.tistory.com/80 [Developer Q.bot]
 
 
