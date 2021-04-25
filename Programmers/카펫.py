@@ -1,16 +1,19 @@
-def solution(numbers, target):
-    cnt = 0
+brown=24
+yellow=24
 
-    def operator(numbers, idx):
-        if idx < len(numbers):
-            numbers[idx] *= 1
-            operator(numbers, idx + 1)
-            numbers[idx] *= -1
-            operator(numbers, idx + 1)
-        elif sum(numbers) == target:
-            nonlocal cnt
-            cnt += 1
+def solution(brown, yellow):
+    answer = []
+    weight=brown+yellow
 
-    operator(numbers, 0)
+    for i in range(brown,2,-1):
+        for j in range(brown,2,-1):
+            if yellow == (i-2)*(j-2):
+                if weight==i*j:
+                    answer.append(i)
+                    answer.append(j)
+                    return answer
 
-    return cnt
+
+    return answer
+
+print(solution(brown,yellow))
