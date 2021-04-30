@@ -22,8 +22,6 @@ def uvDivide(p):
     return u,v
 
 
-    #u가 올바른 관호 문자열이라면 다시 재귀
-
 #올바른 괄호 문자열 판단 함수
 def isRight(p):
     result=[]
@@ -32,15 +30,15 @@ def isRight(p):
         if i==0:  #첫번째
             if p[i]==')':
                 return 0
-            else:
+            else:  # '('일때
                 result.append(p[i])
         else:  #두번째부터
-            if p[i]=='(':
+            if p[i]=='(':  # '('일때
                 result.append(p[i])
-            else:
+            else:  # ')'일때
                 if result[-1]=='(':  # ()이 성립했을때
                     result.pop()
-                else:
+                else:    # ((일때
                     result.append(p[i])
 
     if len(result) == 0:
