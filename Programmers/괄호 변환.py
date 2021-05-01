@@ -68,8 +68,6 @@ def solution(p):
     print('u',u)
     print('v',v)
 
-    tmpV,tmpU='',''
-
     if isRight(u)==1:
         v=solution(v)
         u=u+v
