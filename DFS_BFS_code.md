@@ -19,7 +19,7 @@ def dfs(graph,v,visited):
 ### BFS
 
 ```python
-from colletions import deque   #Queue 생성 라이브러리
+from collections import deque   #Queue 생성 라이브러리
 
 graph=[]
 visited=[False] * 노드갯수
