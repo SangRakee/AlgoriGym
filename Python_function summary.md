@@ -12,7 +12,57 @@
   list[:5] # 출력값 : 1,2,3,4
   ```
 
+
+
+
+- 리스트 출력시 대괄호 제거
+
+  ```python
+  result=[1,2,3]
   
+  print(result)
+  # [1,2,3]
+  
+  for i in range(len(result)):
+      print(result[i], end=" ")
+  # 1 2 3 
+  # 단, 마지막 인덱스 출력 후에 공백 생성
+  
+  print(*result)
+  # 1 2 3
+  ```
+
+
+
+- 문자열 변경
+
+  ```python
+  # 문자열.replace("찾을값","바꿀값",[바꿀 횟수],[바꿀 시작 위치])    # 바꿀시작위치(기본값: 좌측, -1:우측)
+  
+  text='123,456,789,999'
+  
+  replaceAll= text.replace(",","")
+  replace_t1 = text.replace(",", "",1)
+  replace_t2 = text.replace(",", "",2)
+  replace_t3 = text.replace(",", "",3)
+  print("결과 :")
+  print(replaceAll)
+  print(replace_t1)
+  print(replace_t2)
+  print(replace_t3)
+  
+  '''
+  결과 : 
+  123456789999
+  123456,789,999
+  123456789,999
+  123456789999
+  '''
+  ```
+
+  
+
+
 
 - 깊은 복사
 
@@ -94,4 +144,23 @@
   
   ```
 
+
+
+
+- 리스트 원소들의 갯수
+
+  ```python
+  from collections import Counter
   
+  list1=["a","b","c","a","a","b"]
+  
+  counter=Counter(list1)    # 출력 : Counter({"a":3,"b":2,"c":1})
+  
+  # Counter 내장함수
+  # most_common(n)
+  Counter(list1).most_common(1) # 출력 : [("a":3)]
+  
+  ```
+
+
+
