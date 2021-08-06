@@ -145,3 +145,13 @@
 
    ![image-20210730234434415](images/image-20210730234434415.png)
 
+
+
+9. 단어 합치기
+
+   ```mysql
+   SELECT member_id, CONCAT(round(coupon_price/order_price*100,2),'%') AS last_dc 
+   FROM A;
+   ```
+
+   
