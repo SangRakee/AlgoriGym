@@ -144,10 +144,25 @@
    ```
 
    ![image-20210730234434415](images/image-20210730234434415.png)
+   
 
 
 
-9. 단어 합치기
+
+
+9. 날짜 계산하기
+
+   ```mysql
+   # 날짜 더하기
+   DATE_ADD(기준 날짜, INTERVAL)
+   
+   # 날짜 빼기
+   DATE_SUB(기준 날짜, INTERVAL)
+   ```
+
+   
+
+10. 단어 합치기
 
    ```mysql
    SELECT member_id, CONCAT(round(coupon_price/order_price*100,2),'%') AS last_dc 
@@ -155,3 +170,88 @@
    ```
 
    
+
+
+
+
+
+
+
+# 문제
+
+###  순위 문제 예시 테이블
+
+```mysql
+CREATE TABLE emp (
+  `empno` int, 
+  `ename` varchar(6), 
+  `birth` datetime,
+  `job` VARCHAR(30), 
+  `sal` INT
+  ) ; 
+  
+INSERT INTO emp 
+(`empno`, `ename`, `birth`,`job`,`sal`) 
+VALUES 
+(7902, 'Ford', '2000-12-16 00:00:00','ANALYST',3000), 
+(7788, 'Hoon', '2000-12-15 00:00:00','ANALYST',3000), 
+(8864, 'Shen', '2000-12-14 00:00:00','CLERK',800), 
+(8411, 'Blake', '2000-12-17 00:00:00','CLERK',950), 
+(9417, 'Suzy', '2000-12-15 00:00:00','MANAGER',2450), 
+(2414, 'Jones', '2000-12-18 00:00:00','MANAGER',2850), 
+(4412, 'Martin', '2000-12-19 00:00:00','MANAGER',2950); 
+```
+
+1. 연속된 날짜 3일 이상인 데이터  확인하는 문제
+
+   ```mysql
+   set 
+   @rownum:= 0, 
+   @before_birth_plus1:="", 
+   @before_birth_same:="";
+   
+   select empno,ename,rank
+   from(
+     select e.*,
+     (
+       case 
+       when @before_birth_plus1 = DATE_FORMAT(e.birth, '%Y-%m-%d')
+       then @rownum:=@rownum+1
+       when @before_birth_sam = DATE_FORMAT(e.birth, '%Y-%m-%d')
+       then @rownum:=@rownum
+       else @rownum:=1
+       end
+     ) rank,
+     (@before_birth_plus1:= (date_add(DATE_FORMAT(e.birth, '%Y-%m-%d'), interval 1 day))) before_birth_plus1,
+     (@before_birth_sam:= DATE_FORMAT(e.birth, '%Y-%m-%d')) before_birth_sam
+     from emp e
+     order by e.birth
+   ) rank_table
+   where rank>=3;
+   ```
+
+   
+
+2. 연봉 순위 매기기
+
+```mysql
+set @rownum:= 0, @cjob:="", 
+
+SELECT empno, ename, job, sal, job_sal_rank 
+FROM ( 
+    SELECT a.*, 
+    (
+        CASE  
+        WHEN @cjob=a.job 
+        THEN @rownum := @rownum + 1 
+        ELSE @rownum := 1 
+        END
+    ) job_sal_rank
+    FROM emp a, 
+    (SELECT @cjob :='',@rownum := 0 FROM DUAL) b 
+    ORDER BY a.job,a.sal DESC 
+) rank_table;
+```
+
+1. 
+
