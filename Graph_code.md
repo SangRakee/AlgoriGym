@@ -62,7 +62,7 @@
        2)	진입차수 0인 애들 초기 Queue 적재
 
        ```python
-       for i in range(N+1):
+       for i in range(1,N+1):
            if indegree[i]==0:
                queue.append(i)
        ```

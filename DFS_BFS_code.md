@@ -6,7 +6,7 @@
 graph=[]
 visited=[False] * 노드갯수
 
-def dfs(graph,v,visited):
+def dfs(v):
     visited[v]=True  #현대 노드 방문 처리
     print(v, end=' ')
     for i in graph[v]: #현재 노드와 연결된 다른 노드를 재귀적으로 방문 
@@ -37,13 +37,14 @@ visited=[False] * 노드갯수
 def bfs(graph, start, visited):
     queue = deque([start])
     visited[start]= True
+    
     while queue:
-        v=queue.popleft()
+        v=queue.popleft()		  # 1. 큐에서 꺼내옴
         print(v,end= '')
-        for i in graph[v]:
-            if not visited[i]:
-                queue.append(i)
-                visited[i]=True
+        for i in graph[v]:        # 3.갈 수 있는 곳 순회
+            if not visited[i]:    # 4.갈 수 있는가
+                queue.append(i)   # 5.큐에넣기
+                visited[i]=True   # 6.체크인
 ```
 
 
@@ -52,5 +53,5 @@ def bfs(graph, start, visited):
 2. 목적지인가?
 3. 갈 수 있는 곳 순회
 4. 갈 수 있는가
-5. 체크인
-6. 큐에 넣기
+5. 큐에 넣기
+6. 체크인
