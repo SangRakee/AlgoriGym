@@ -74,19 +74,20 @@
        while queue:
            now=queue.popleft()
            result.append(now)
-           
        ```
-
-       3-1)  Queue에서 뽑은 노드와 연결된 노드들의 진입차수 1빼기
-
-       ```python
-       	for i in grahp[now]:
-               indegree[i]-=1
-               if indegree[i]==0:
-                   queue.append(i)
-       ```
-
        
+       3-1)  Queue에서 뽑은 노드와 연결된 노드들의 진입차수 1빼기
+       
+        ```python
+        for i in grahp[now]:
+            indegree[i]-=1
+            if indegree[i]==0:
+                queue.append(i)
+        ```
+       
+       
+
+
 
 ### 트리
 
@@ -154,6 +155,14 @@
 
 - 최단 경로 알고리즘
 
+
+  - 다양한 경우
+
+
+    - 한 지점에서 다른 한 지점까지 최단 경로
+    - 한 지점에서 다른 모든 지점가지의 최단 경로(다익스트라, 벨만-포드)
+    - 모든 지점에서 다른 모든 지점까지의 최단 경로(플로이드-워셜)
+
   - 다익스트라, 벨만-포드, 플로이드-워셜 알고리즘
 
   - 다익스트라 알고리즘(우선 순위 큐 적용시: O(ElogV) )
@@ -169,7 +178,7 @@
       ```python
       import heapq
       INF = int(1e9) # 무한을 의미하는 값으로 10억을 설정
-      graph = [[]] # 노드별 간선정보(진출차수)가 담긴 그래프 리스트
+      graph = [[] for i in range(N+1)] # 노드별 간선정보(진출차수)가 담긴 그래프 리스트
       distance = [INF] * (N + 1) # 최단 거리 테이블을 모두 무한으로 초기화
       ```
 
@@ -221,7 +230,7 @@
 
     - 출발지 고정
 
-    - 음수 간선 가능
+    - 음수 간선 가능(음수 사이클x)
 
     - O(E*V)
 
