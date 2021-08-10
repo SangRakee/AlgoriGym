@@ -132,7 +132,7 @@
 - 딕셔너리 정렬
 
   ```python
-  # item 함수를 이용하여 딕셔너리를 튜플 형태로 변환하는 방식
+  # items() 함수를 이용하여 딕셔너리를 튜플 형태로 변환하는 방식
   
   # key 값으로 정렬
   dict = {'A' :1,'D' :4,'C' :3,'B' :2}
@@ -142,6 +142,9 @@
   dict = {'A' :1,'D' :4,'C' :3,'B' :2}
   sort_dict= sorted(dict.items(), key=lambda x:x[1][0]) #람다로 해당 value 위치 결정
   
+  #딕셔너리 삭제
+  dict.pop(x) # x를 삭제 동시에 반환
+  del dict(x) # x를 삭제
   ```
 
 
@@ -163,4 +166,17 @@
   ```
 
 
+
+- bisect 라이브러리
+
+  ```python
+  from bisect import bisect_left, bisect_right
+  
+  a = [1, 2, 4, 4, 8]
+  
+  print(bisect_left(a, 4))  #2
+  print(bisect_right(a, 4))  #4
+  ```
+
+  
 
