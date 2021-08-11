@@ -74,6 +74,11 @@
   # 2차 행렬
   list1 = [[a,b],[c,d]]
   list2 = [i[:] for i in list1]
+  
+  
+  import copy
+  
+  list2=copy.deepcopy(list1)
   ```
 
   
