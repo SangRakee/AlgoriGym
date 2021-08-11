@@ -180,10 +180,13 @@
       INF = int(1e9) # 무한을 의미하는 값으로 10억을 설정
       graph = [[] for i in range(N+1)] # 노드별 간선정보(진출차수)가 담긴 그래프 리스트
       distance = [INF] * (N + 1) # 최단 거리 테이블을 모두 무한으로 초기화
+      
+      # 경로를 담는 리스트 (문제에서 경로를 물어볼 시)
+      # path = [[] for i in range(N+1)] 
       ```
-
+      
       2)	초기 출발지 고정
-
+      
       ```python
       def dijkstra(start):
           edges = [] #우선순위 큐
@@ -191,37 +194,41 @@
           heapq.heappush(edges, (0, start))
           distance[start] = 0
       ```
-
+      
       3)	우선 순위 큐로 최단 거리 노드 추출
-
+      
       ```python
       	while edges:
       		# 최단 거리가 가장 짧은 노드 정보 추출
               dist, now = heapq.heappop(edge)
       ```
-
+      
       3-1) 	현재 노드가 이미 처리된 적 있는 노드 판단
-
+      
       ```python
             	if distance[now]<dist:
                   continue
+              # 현재 노드에 연결된 노드 추가
+              # path[now].append(now)
       ```
-
+      
       3-2)	현재 노드와 연결된 다른 인접한 노드들 확인
 
       ```python
               for i in grahp[now]:
                   cost = dist + i[1]    # i[0]: 목적지, i[1]: 비용
       ```
-
+      
       3-3)	현재 노드를 거쳐서, 다른 노드로 이동하는 거리가 더 짧은 경우
-
+      
       ```python
       			if cost < distance[i[0]]:
                       distance[i[0]] = cost
                       heapq.heappush(edges, (cost, i[0]))
+                      # 최단 거리 수정으로 인해 최단 경로 수정 
+                      # path[i[0]]=path[now][:]
       ```
-
+      
       
 
   
@@ -253,9 +260,47 @@
   -  플로이드-워셜
 
     - 모든 경로의 최단거리 파악
+    
     - 음수 간선 가능
+    
     - 음수 싸이클 있으면 불가
+    
     - O(N^3) -- 300미만
+    
+      1)	기본 세팅
+    
+      ```python
+      graph = [[int(1e9)] * (n + 1) for _ in range(n + 1)]
+      ```
+    
+      2)	초기 비용 세팅
+    
+      ```python
+      # 자기 자신에서 자기 자신으로 가는 비용은 0으로 초기화
+      for a in range(1, n + 1):
+          for b in range(1, n + 1):
+              if a == b:
+                  graph[a][b] = 0
+                  
+      # 각 간선에 대한 정보를 입력 받아, 그 값으로 초기화
+      for _ in range(m):
+          a, b, cost = map(int, input().split())
+          graph[a][b] = cost
+      ```
+    
+      3)	점화식
+    
+      ```python
+      # 점화식에 따라 플로이드 워셜 알고리즘을 수행
+      for k in range(1, n + 1): 			# 경유지
+          for a in range(1, n + 1):   	# 출발지
+              for b in range(1, n + 1):	# 도착지
+                  graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+      ```
+    
+      
+    
+      
 
   | 다익스트라 | 벨만-포드 | 플로이드-워셜 |
   | ---------- | --------- | ------------- |
