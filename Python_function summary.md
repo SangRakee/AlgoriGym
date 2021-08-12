@@ -93,18 +93,32 @@
 
 
 
-- 딕셔너리 정렬
+- 딕셔너리 
 
   ```python
-  dict={}
+  #딕셔너리 생성
+  dict1={}
+  dict2=dict()
   
-  change1_dict=sorted(dict.item()) # 리스트로 변환 후 정렬
-  change2_dict=sorted(dict.item(), key=lambda x:x[n]) # 리스트로 변환 후 n번째 인덱스 순으로 정렬
-  
-  #딕셔너리 삭제
+  # 딕셔너리 삭제
   dict.pop(x) # x를 삭제 동시에 반환
+  del dict(x) # x를 삭제
+  
+  # 딕셔너리.get() - 찾고자 하는 value가 없을때
+  years={"a":2020, "b":2021}
+  c=years.get("c","Nothing") # 찾고자하는 key가 존재하지 않을때 Nothing이라는 변수를 저장
+  
+  
+  # 딕셔너리 정렬 - items() 함수를 이용하여 딕셔너리를 튜플 형태로 변환하는 방식
+  	# 1.key 값으로 정렬
+  dict = {'A' :1,'D' :4,'C' :3,'B' :2}
+  sort_dict= sorted(dict.items()) # 딕셔너리를 튜플로 바꾼다음에 정렬
+  
+  	# 2.value 값으로 정렬
+  dict = {'A' :1,'D' :4,'C' :3,'B' :2}
+  sort_dict= sorted(dict.items(), key=lambda x:x[1][0]) #람다로 해당 value 위치 결정
   ```
-
+  
   
 
 
@@ -132,25 +146,6 @@
       print('잘못된 인덱스입니다.')
   ```
 
-  
-
-- 딕셔너리 정렬
-
-  ```python
-  # items() 함수를 이용하여 딕셔너리를 튜플 형태로 변환하는 방식
-  
-  # key 값으로 정렬
-  dict = {'A' :1,'D' :4,'C' :3,'B' :2}
-  sort_dict= sorted(dict.items()) # 딕셔너리를 튜플로 바꾼다음에 정렬
-  
-  # value 값으로 정렬
-  dict = {'A' :1,'D' :4,'C' :3,'B' :2}
-  sort_dict= sorted(dict.items(), key=lambda x:x[1][0]) #람다로 해당 value 위치 결정
-  
-  #딕셔너리 삭제
-  dict.pop(x) # x를 삭제 동시에 반환
-  del dict(x) # x를 삭제
-  ```
 
 
 
