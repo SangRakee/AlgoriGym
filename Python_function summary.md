@@ -180,3 +180,13 @@
 
   
 
+- extend
+
+  ```python
+  x = ["lee", "kim"]
+  y = ["park", "choi"]
+  x.append(y) # ["lee", "kim", ["park", "choi"]]
+  x.extend(y) # ["lee", "kim", "park", "choi"]
+  ```
+
+  
