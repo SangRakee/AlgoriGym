@@ -14,6 +14,83 @@
 
 
 
+- 문자열 변경
+
+  ```python
+  # 문자열.replace("찾을값","바꿀값",[바꿀 횟수],[바꿀 시작 위치])    
+  # 바꿀시작위치(기본값: 좌측, -1:우측)
+  
+  text='123,456,789,999'
+  
+  text.replace(",","")     # 123456789999
+  text.replace(",", "",1)  # 123456,789,999
+  text.replace(",", "",2)  # 123456789,999
+  text.replace(",", "",3)  # 123456789999
+  ```
+
+
+
+
+- 문자열 공백 및 특무 문자 제거
+
+  ```python
+  # strip("문자열")
+  
+  a=" python "
+  
+  # 공백 제거
+  a.strip()  # "python"
+  a.lstrip() # "python " 
+  a.rstrip() # " python"
+  ```
+
+  
+
+
+
+- 문자열 대소문자
+
+  ```python
+  a="python"
+  A="PYTHON"
+  
+  # 1.대소문자 변환
+  a.upper() # PYTHON
+  A.lower() # python
+  
+  # 2.대소문자 판단
+  print(a.isupper()) # False
+  print(a.islower()) # True
+  ```
+
+
+
+- 문자열 찾기
+
+  ```python
+  # find("찾을 문자열")
+  'apple pineapple'.find('pl') # 2
+  
+  # index("찾을 문자열")
+  'apple pineapple'.index('pl') # 2
+  
+  # find, index 함수는 왼쪽부터 찾음(단, rfind(),rindex()를 통해 오른쪽부터 찾기 가능)
+  # index는 찾을 문자열이 존재하지 않으면 에러 발생(find는 -1 반환)
+  ```
+
+  
+
+- 문자열 개수 세기
+
+  ```python
+  # count("셀 문자열")
+  'apple pineapple'.count('pl') # 2
+  ```
+
+  
+
+
+
 
 - 리스트 출력시 대괄호 제거
 
@@ -31,36 +108,6 @@
   print(*result)
   # 1 2 3
   ```
-
-
-
-- 문자열 변경
-
-  ```python
-  # 문자열.replace("찾을값","바꿀값",[바꿀 횟수],[바꿀 시작 위치])    # 바꿀시작위치(기본값: 좌측, -1:우측)
-  
-  text='123,456,789,999'
-  
-  replaceAll= text.replace(",","")
-  replace_t1 = text.replace(",", "",1)
-  replace_t2 = text.replace(",", "",2)
-  replace_t3 = text.replace(",", "",3)
-  print("결과 :")
-  print(replaceAll)
-  print(replace_t1)
-  print(replace_t2)
-  print(replace_t3)
-  
-  '''
-  결과 : 
-  123456789999
-  123456,789,999
-  123456789,999
-  123456789999
-  '''
-  ```
-
-  
 
 
 
@@ -190,3 +237,4 @@
   ```
 
   
+
