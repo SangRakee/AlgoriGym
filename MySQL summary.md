@@ -1,13 +1,16 @@
 # MySQL 정리
 
-1. 반올림, 내림
+1. 반올림, 올림, 내림
 
    ```mysql
    # 반올림 : ROUND(값,소수점 자리수)
-   SELECT ROUND(14.13,1) FROM TABLE; # 출력 : 14.1
+   SELECT Round(14.13,1) FROM TABLE; # 출력 : 14.1
+   
+   # 올림
+   SELECT Ceil(14.13) FROM TABLE; # 출력 : 15
    
    # 버림
-   SELECT TRUNCATE(14.13,1) FROM TABLE; # 출력 : 14.1
+   SELECT Floor(14.13) FROM TABLE; # 출력 : 14
    ```
 
    
@@ -37,7 +40,7 @@
    ORDER BY ANIMAL_ID
    
    # IF(조건,결과1,아닐시결과2)
-   SELECT ANIMAL_TYPE, IF(NAME IS NULL, 'No name'), SEX_UPON_INTAKE
+   SELECT ANIMAL_TYPE, IF(NAME IS NULL, 'No name',NAME), SEX_UPON_INTAKE
    FROM ANIMAL_INS
    ORDER BY ANIMAL_ID
    ```
@@ -144,7 +147,6 @@
    ```
 
    ![image-20210730234434415](images/image-20210730234434415.png)
-   
 
 
 
@@ -153,23 +155,21 @@
 9. 날짜 계산하기
 
    ```mysql
-   # 날짜 더하기
-   DATE_ADD(기준 날짜, INTERVAL)
+   # 날짜 더하기 DATE_ADD(date, INTERVAL 계산수 계산형식)
+   DATE_ADD(기준 날짜, INTERVAL 1 MONTH)
    
    # 날짜 빼기
-   DATE_SUB(기준 날짜, INTERVAL)
+   DATE_SUB(기준 날짜, INTERVAL 1 MONTH)
    ```
 
    
 
 10. 단어 합치기
 
-   ```mysql
-   SELECT member_id, CONCAT(round(coupon_price/order_price*100,2),'%') AS last_dc 
-   FROM A;
-   ```
-
-   
+    ```mysql
+    SELECT member_id, CONCAT(round(coupon_price/order_price*100,2),'%') AS last_dc 
+    FROM A;
+    ```
 
 
 
@@ -194,64 +194,61 @@ INSERT INTO emp
 (`empno`, `ename`, `birth`,`job`,`sal`) 
 VALUES 
 (7902, 'Ford', '2000-12-16 00:00:00','ANALYST',3000), 
-(7788, 'Hoon', '2000-12-15 00:00:00','ANALYST',3000), 
-(8864, 'Shen', '2000-12-14 00:00:00','CLERK',800), 
+(7788, 'Hoon', '2000-12-15 00:00:00','CLERK',3000), 
+(8864, 'Shen', '2000-12-14 00:00:00','CLERK',800),
+(7902, 'Ford', '2000-12-16 00:00:00','ANALYST',700), 
 (8411, 'Blake', '2000-12-17 00:00:00','CLERK',950), 
 (9417, 'Suzy', '2000-12-15 00:00:00','MANAGER',2450), 
 (2414, 'Jones', '2000-12-18 00:00:00','MANAGER',2850), 
 (4412, 'Martin', '2000-12-19 00:00:00','MANAGER',2950); 
 ```
 
-1. 연속된 날짜 3일 이상인 데이터  확인하는 문제
+1. 연봉 순위 매기기
+
+   ```mysql
+   set @rownum:= 0, @cjob:=""; 
+   
+   SELECT empno, ename, job, sal, job_sal_rank 
+   FROM ( 
+       SELECT a.*, 
+       (
+           CASE  
+           	WHEN @cjob=a.job THEN @rownum := @rownum + 1 
+           	ELSE @rownum := 1 
+           END
+       ) job_sal_rank,
+       (@cjob := a.job) cjob
+       FROM emp a
+       ORDER BY a.job,a.sal DESC 
+   ) rank_table;
+   ```
+   
+   
+   
+2. 연속된 날짜 3일 이상인 데이터  확인하는 문제
 
    ```mysql
    set 
-   @rownum:= 0, 
+   @rownum:= 1, 
    @before_birth_plus1:="", 
-   @before_birth_same:="";
+   @before_birth_same:="";  
    
-   select empno,ename,rank
-   from(
-     select e.*,
+   SELECT empno,ename,rank
+   FROM(
+     SELECT e.*,
      (
-       case 
-       when @before_birth_plus1 = DATE_FORMAT(e.birth, '%Y-%m-%d')
-       then @rownum:=@rownum+1
-       when @before_birth_sam = DATE_FORMAT(e.birth, '%Y-%m-%d')
-       then @rownum:=@rownum
-       else @rownum:=1
-       end
+       CASE
+           WHEN @before_birth_plus1 = DATE_FORMAT(e.birth, '%Y-%m-%d') THEN @rownum:=@rownum+1
+       	WHEN @before_birth_same = DATE_FORMAT(e.birth, '%Y-%m-%d') THEN @rownum:=@rownum
+       	ELSE @rownum:=1
+       END
      ) rank,
-     (@before_birth_plus1:= (date_add(DATE_FORMAT(e.birth, '%Y-%m-%d'), interval 1 day))) before_birth_plus1,
-     (@before_birth_sam:= DATE_FORMAT(e.birth, '%Y-%m-%d')) before_birth_sam
-     from emp e
-     order by e.birth
+     (@before_birth_plus1:= DATE_ADD(DATE_FORMAT(e.birth, '%Y-%m-%d'), INTERVAL 1 day)) before_birth_plus1,
+     (@before_birth_same:= DATE_FORMAT(e.birth, '%Y-%m-%d')) before_birth_sam
+     FROM emp e
+     ORDER BY e.birth
    ) rank_table
-   where rank>=3;
+   WHERE rank>=3;
    ```
 
-   
-
-2. 연봉 순위 매기기
-
-```mysql
-set @rownum:= 0, @cjob:="", 
-
-SELECT empno, ename, job, sal, job_sal_rank 
-FROM ( 
-    SELECT a.*, 
-    (
-        CASE  
-        WHEN @cjob=a.job 
-        THEN @rownum := @rownum + 1 
-        ELSE @rownum := 1 
-        END
-    ) job_sal_rank
-    FROM emp a, 
-    (SELECT @cjob :='',@rownum := 0 FROM DUAL) b 
-    ORDER BY a.job,a.sal DESC 
-) rank_table;
-```
-
-1. 
 
