@@ -1,17 +1,24 @@
-n = int(input())
+# DP문제
 
-t, p = [0] * n, [0] * n
+import sys
 
-for i in range(n):
-    t[i], p[i] = map(int, input().split())
+N=int(sys.stdin.readline())
 
-dp = [0] * 25
+T=[]
+P=[]
+dp=[0]*(N+1)
 
-for i in range(n):
-    if dp[i] > dp[i + 1]:  # 현재가 다음날보다 보상이 높다면
-        dp[i + 1] = dp[i]  # 다음날 보상은 현재로
-    if dp[i + t[i]] < dp[i] + p[i]:  # T일 후에 받게될 금액이 현재의 보상보다 높다면
-        dp[i + t[i]] = dp[i] + p[i]  # T일후에 보상을 넣는다.
+for i in range(N):
+    t,p=map(int,sys.stdin.readline().split())
+    T.append(t)
+    P.append(p)
 
-print(dp[n])
+# print(P)
+for i in range(N-1,-1,-1):
+    if i+T[i]>N:
+        dp[i]=dp[i+1]
+    else:
+        dp[i]=max(dp[i+1],P[i]+dp[i+T[i]])
 
+
+print(dp[0])
