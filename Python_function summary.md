@@ -128,7 +128,24 @@
   list2=copy.deepcopy(list1)
   ```
 
+
+
+
+- 2차원 리스트 회전
+
+  ```python
+  # 반시계 90도 방향
+  a = list(zip(*a))[::-1]
+  a = [list(s) for s in a]
   
+  # 시계 90도 방향
+  a = list(zip(*a))
+  a = [list(s) for s in a]
+  ```
+
+  
+
+
 
 - 정렬
 
@@ -238,3 +255,16 @@
 
   
 
+- defaultdit 라이브러리
+
+  ```python
+  from collections import defaultdict
+  
+  d_dict = defaultdict(int)
+  d_dict["a"]  # 0
+  
+  d_dict = defaultdict(lambda: 'default value')
+  d_dict["a"]  # 'default value'
+  ```
+
+  
