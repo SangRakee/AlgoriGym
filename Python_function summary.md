@@ -1,5 +1,22 @@
 # 파이썬 자주 사용하는 유용한 코드
 
+- n진수 -> 10진수
+
+  ```python
+  # int(string,진법)
+  
+  print(int('101',2))   # 5
+  print(int('202',3))   # 20
+  print(int('303',4))   # 51
+  print(int('404',5))   # 104
+  print(int('505',6))   # 185
+  print(int('ACF',16))  # 2767
+  ```
+
+  
+
+
+
 - 슬라이싱
 
   ```python
