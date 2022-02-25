@@ -152,15 +152,13 @@
 
   ```python
   # 반시계 90도 방향
-  a = list(zip(*a))[::-1]
-  a = [list(s) for s in a]
+  a = [i for i in list(zip(*a))[::-1]]
   
   # 시계 90도 방향
-  a = list(zip(*a))
-  a = [list(s) for s in a]
+  a = [list(i)[::-1] for i in zip(*a)]
   ```
-
   
+
 
 
 
@@ -170,6 +168,8 @@
   list=[[1,2],[2,3],[2,1]]
   
   list.sort(key=lambda x:x[1]) # i[1]번째 인덱스로 정렬
+  
+  list.sort(key=len) # 리스트 길이로 정렬
   ```
 
 
@@ -282,6 +282,24 @@
   
   d_dict = defaultdict(lambda: 'default value')
   d_dict["a"]  # 'default value'
+  ```
+
+
+
+
+- 순열, 조합, 중복순열, 중복조합
+
+  ```python
+  from itertools import permutations # 순열
+  from itertools import combinations # 조합
+  from itertools import product # 중복순열
+  from itertools import combinations_with_replacement # 중복조합
+  
+  arr = ['A', 'B', 'C']
+  
+  res = list(product(arr, repeat = 2)) # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
+  
+  res = list(combinations_with_replacement(arr, 2)) # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
   ```
 
   
